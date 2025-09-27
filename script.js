@@ -1,52 +1,76 @@
-let username = document.getElementById("username").focus();
 
-function validatePassword(password) {
-  const hasUpper = /[A-Z]/.test(password);
-  const hasLower = /[a-z]/.test(password);
-  const hasNumber = /[0-9]/.test(password);
-  const hasSpecial = /[!@#$%^&*]/.test(password);
 
-  return hasUpper && hasLower && hasNumber && hasSpecial;
-}
+document.getElementById("form-validate").addEventListener("submit", (e) => {
+  e.preventDefault();
 
-function login() {
-  let username = document.getElementById("username").value.trim();
-  let password = document.getElementById("password").value;
+  let username = document.getElementById("userName").value.trim();
+  let email = document.getElementById("email").value.trim();
+  let password = document.getElementById("password").value.trim();
+  let confirmPassword = document.getElementById("confirmPassword").value.trim();
 
-  let usernameError = document.getElementById("usernameError");
-  let passwordError = document.getElementById("passwordError");
-  let successMessage = document.getElementById("successMessage");
+  let uNameError = document.getElementById("uName-error");
+  let emailError = document.getElementById("mail-error");
+  let passError = document.getElementById("password-error");
+  let cPassError = document.getElementById("cPassword-error");
+  let success = document.getElementById("sucess");
 
-  // Clear old messages
-  usernameError.innerHTML = "";
-  passwordError.innerHTML = "";
-  successMessage.innerHTML = "";
+  let isValid = true;
 
-  // username
+  let uNamePattern = /^[A-Za-z]+ [A-Za-z]+$/;
+
   if (username === "") {
-    usernameError.innerHTML = "Please Enter Gmail address";
-    return;
-  } else if (!username.endsWith("@gmail.com")) {
-    usernameError.innerHTML =
-      "❌ Username must be a Gmail address (example@gmail.com)";
-    return;
-  }
-
-  // Password validation
-  if (password === "") {
-    passwordError.innerHTML = "Please Create Password";
-  } else if (!validatePassword(password)) {
-    passwordError.innerHTML =
-      "❌ Password must contain: 1 Uppercase, 1 Lowercase, 1 Number, 1 Special Character";
-    return;
+    uNameError.textContent = "*Username required";
+    isValid = false;
+  } else if (!uNamePattern.test(username)) {
+    uNameError.textContent = "*Enter your full name";
+    isValid = false;
   } else {
-    // If everything is correct
-    successMessage.innerHTML = "✅ Login Successful!";
+    uNameError.textContent = "";
+      isValid = false;
   }
-}
 
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Enter") {
-    login();
+
+   let emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+ 
+   if (email === "") {
+    emailError.textContent = "*Email is required";
+    isValid = false;
+  } else if (!emailPattern.test(email)) {
+    emailError.textContent = "*Enter a valid email";
+    isValid = false;
+  } else {
+    emailError.textContent = "";
+      isValid = true;
+  }
+
+
+  if (password === "") {
+    passError.textContent = "*Password is required";
+    isValid = false;
+  } else if (password.length <6 ) {
+    passError.textContent = "*Password must be at least 6 characters";
+    isValid = false;
+  } else {
+    passError.textContent = "";
+      isValid = true;
+  }
+
+  if (confirmPassword === "") {
+    cPassError.textContent = "*Confirm Password is required";
+    isValid = false;
+  } else if (password !== confirmPassword) {
+    cPassError.textContent = "*Passwords do not match";
+    isValid = false;
+  } else {
+    cPassError.textContent = "";
+      isValid = true;
+  }
+
+
+  if (isValid) {
+    success.textContent = "Form submitted successfully ✅";
+  } else {
+    success.textContent = "";
   }
 });
+
