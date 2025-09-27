@@ -1,7 +1,9 @@
+let username = document.getElementById("username").focus();
+
 function validatePassword(password) {
-  const hasUpper   = /[A-Z]/.test(password);
-  const hasLower   = /[a-z]/.test(password);
-  const hasNumber  = /[0-9]/.test(password);
+  const hasUpper = /[A-Z]/.test(password);
+  const hasLower = /[a-z]/.test(password);
+  const hasNumber = /[0-9]/.test(password);
   const hasSpecial = /[!@#$%^&*]/.test(password);
 
   return hasUpper && hasLower && hasNumber && hasSpecial;
@@ -20,18 +22,31 @@ function login() {
   passwordError.innerHTML = "";
   successMessage.innerHTML = "";
 
-  // Gmail validation
-  if (!username.endsWith("@gmail.com")) {
-    usernameError.innerHTML = "❌ Username must be a Gmail address (example@gmail.com)";
+  // username
+  if (username === "") {
+    usernameError.innerHTML = "Please Enter Gmail address";
+    return;
+  } else if (!username.endsWith("@gmail.com")) {
+    usernameError.innerHTML =
+      "❌ Username must be a Gmail address (example@gmail.com)";
     return;
   }
 
   // Password validation
-  if (!validatePassword(password)) {
-    passwordError.innerHTML = "❌ Password must contain: 1 Uppercase, 1 Lowercase, 1 Number, 1 Special Character";
+  if (password === "") {
+    passwordError.innerHTML = "Please Create Password";
+  } else if (!validatePassword(password)) {
+    passwordError.innerHTML =
+      "❌ Password must contain: 1 Uppercase, 1 Lowercase, 1 Number, 1 Special Character";
     return;
+  } else {
+    // If everything is correct
+    successMessage.innerHTML = "✅ Login Successful!";
   }
-
-  // If everything is correct
-  successMessage.innerHTML = "✅ Login Successful!";
 }
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    login();
+  }
+});
