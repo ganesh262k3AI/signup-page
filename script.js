@@ -26,13 +26,11 @@ document.getElementById("form-validate").addEventListener("submit", (e) => {
     isValid = false;
   } else {
     uNameError.textContent = "";
-      isValid = false;
   }
 
+  let emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
 
-   let emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
- 
-   if (email === "") {
+  if (email === "") {
     emailError.textContent = "*Email is required";
     isValid = false;
   } else if (!emailPattern.test(email)) {
@@ -40,19 +38,16 @@ document.getElementById("form-validate").addEventListener("submit", (e) => {
     isValid = false;
   } else {
     emailError.textContent = "";
-      isValid = true;
   }
-
 
   if (password === "") {
     passError.textContent = "*Password is required";
     isValid = false;
-  } else if (password.length <6 ) {
+  } else if (password.length < 6) {
     passError.textContent = "*Password must be at least 6 characters";
     isValid = false;
   } else {
     passError.textContent = "";
-      isValid = true;
   }
 
   if (confirmPassword === "") {
@@ -63,14 +58,11 @@ document.getElementById("form-validate").addEventListener("submit", (e) => {
     isValid = false;
   } else {
     cPassError.textContent = "";
-      isValid = true;
   }
 
-
-  if (isValid) {
-    success.textContent = "Form submitted successfully ✅";
+  if (isValid === true) {
+    success.textContent = "Account Created successfully ✅";
   } else {
     success.textContent = "";
   }
 });
-
